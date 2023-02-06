@@ -1,12 +1,12 @@
 ## Real Time Sync from MongoDB Atlas to Azure Synapse using Spark Streaming
-### Background:
+## Background:
 Azure Synapse is used by multiple customers as a one stop solution for their analytical needs. Data is ingested from disparate sources into Synapse Dedicated SQL Pools (EDW) and SQL, AI/ ML, Batch, Spark based analytics can be performed and data is further visualised using tools like Power BI. 
 
 MongoDB has both a Source and Sink connector for Synapse Pipelines which enables fetching data from MongoDB or loading data into MongoDB in batches/ micro batches.
 
 However, currently there is no CDC connector for MongoDB in Synapse which can keep the Synapse Dedicated SQL pools synced with MongoDB data in real time. To facilitate real time analytics, MongoDB with Microsoft provided a custom solution and gave it as a few clicks and configuration based deployment as detailed here. There is however still a need to provide a more seamless integration for Real time sync from MongoDB to Synapse and spark streaming connector from MongoDB can be of help here.
 
-### Solution Overview:
+## Solution Overview:
 MongoDB’s latest Spark connector v10.1  provides streaming capabilities which allows streaming of changes from MongoDB or to MongoDB in both continuous and micro-batch modes. This eliminates the need for an Appservice to keep running and listening to the changes in the MongoDB collection and trigger Pipelines in Synapse to update the Dedicated SQL as and when changes are captured. All we need is a small piece of code that reads a stream of changes from MongoDB collection and writes to the ADLS gen2 in Synapse in a table format which can be queried like any other tables. The code is packaged as a Pipeline template and the User just needs to Import the pipeline, give the parameters to point to the MongoDB collection and table name in ADLS Gen2 and trigger the Pipeline.
 
 Here are the steps you can follow to stream data from MongoDB to Azure Synapse using the Spark based Pipeline template:
