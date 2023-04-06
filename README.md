@@ -11,8 +11,23 @@ MongoDB’s latest Spark connector v10.1  provides streaming capabilities which 
 
 Here are the steps you can follow to stream data from MongoDB to Azure Synapse using the Spark based Pipeline template:
 
+## General Pre-requisites:
+You will need the below set up before starting the Lab:
+1. MongoDB Atlas cluster setup:   
+Register for a new Atlas Account [here](https://www.mongodb.com/docs/atlas/tutorial/create-atlas-account/#register-a-new-service-account).   
+Follow steps from 1 to 4 (*Create an Atlas account*, *Deploy a Free cluster*, *Add your IP to the IP access list* and *Create a Database user*) to set up the Atlas environment.   
+Also, follow step 7 “*Load Sample Data*” to load sample data to be used in the lab.
 
-## Prerequisites:
+![Picture 2](https://user-images.githubusercontent.com/104025201/230300219-6f95d9be-616f-4267-8cce-e4d3af5d1411.png)
+
+**Note: For this lab add “0.0.0.0/0” to the IP access list so that Synapse can connect to MongoDB Atlas. In Production scenarios, it is recommended to use Vnet Peering or Private Link options.**
+
+2. Azure account setup:    
+Follow link [here](https://azure.microsoft.com/en-in/free/) to set up a free azure account
+
+3. Azure Synapse Analytics Workspace setup:   
+Follow link [here](https://learn.microsoft.com/en-us/azure/synapse-analytics/get-started-create-workspace) to set up a Synapse workspace within you Azure account
+## Pre-requisites specific to Spark streaming:
 #### 1. Set up an Azure Spark Pool: 
 Follow the instructions in the [Azure documentation](https://learn.microsoft.com/en-us/azure/synapse-analytics/quickstart-create-apache-spark-pool-studio) to set up an Azure Spark pool. This will allow you to run Spark jobs on Azure. You should have the Owner and required permissions in the Synapse workspace to run Spark Jobs.
 
@@ -38,14 +53,18 @@ Follow the instructions in the [Azure documentation](https://learn.microsoft.com
 
   - Click Apply, this successfully installs the MongoDB Connector in Apache Spark pool instance.
 
-## Workflow Steps:
-#### Import Pipeline :
+## Workflow Steps:   
+1. [Import Pipeline](#import-pipeline)  
+2. [Provide the Configuration parameters](#provide-the-configuration-parameters)  
+3. [Trigger the Pipeline](#trigger-the-pipeline)
+
+#### Import Pipeline
   - Click on Integrate and import the [zip](https://github.com/mongodb-partners/Synapse-Spark-Streaming/blob/main/MongoDB%20Spark%20Streaming.zip) of the pipeline as shown. This zip file contains the Spark code required to enable streaming from MongoDB to Synapse.
 
 	  ![image](https://user-images.githubusercontent.com/114057324/216915692-97beeceb-ea14-43ca-9199-4155466a6053.png)
 
 		
-#### Provide the Configuration parameters :
+#### Provide the Configuration parameters
   - Once imported successfully, click on the pipeline and update the below variables available under Settings > Base parameters.
   
     ![image](https://user-images.githubusercontent.com/114057324/216915949-363faae1-5c18-4e06-8580-fcab6886c488.png)
@@ -58,7 +77,8 @@ collection : The collection that needs to be streamed into Synapse
 tablename : The tablename that we want to have created in the ADLS Gen2 default storage to hold the streamed data
 ````
 
-#### Trigger the Pipeline:
+#### Trigger the Pipeline
+
   - You can start the pipeline using Trigger Now, and run it indefinitely. All the changes will stream to ADLS Gen2 near-real time once the trigger is started.
 
     ![image](https://user-images.githubusercontent.com/114057324/216916399-d52aab8a-33c2-4ad9-be3e-7c96894edb56.png)
@@ -78,4 +98,4 @@ tablename : The tablename that we want to have created in the ADLS Gen2 default 
 
 ## Summary
 This gives a complete guide to set-up and run Spark streaming in order to pull data from MongoDB in near real time.
-For any further information, please contact partners@mongodb.com
+For any further information, please contact partner-presales@mongodb.com
